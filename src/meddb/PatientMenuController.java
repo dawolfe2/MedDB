@@ -25,19 +25,16 @@ public class PatientMenuController implements Initializable {
     private Scene scene;
     private Parent root;
     
-    @FXML
-    private Button buttonEntry;
-    @FXML
-    private Button buttonRecords;
-    @FXML
-    private AnchorPane rootPane;
+    @FXML private Button buttonEntry;
+    @FXML private Button buttonRecords;
+    @FXML private AnchorPane rootPane;
     
         //buttons for moving to the patient entry scene and the patient lookup scene
     @FXML
     private void handleButtonEntry(ActionEvent event) throws IOException {
         
             //code to change scenes to NewPatient fxml
-        Parent root = FXMLLoader.load(getClass().getResource("NewPatient.fxml"));
+        root = FXMLLoader.load(getClass().getResource("NewPatient.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -49,7 +46,7 @@ public class PatientMenuController implements Initializable {
     private void handleButtonRecords(ActionEvent event) throws IOException {
         
             //code to change scenes to PatientLookup fxml
-        Parent root = FXMLLoader.load(getClass().getResource("PatientLookup.fxml"));
+        root = FXMLLoader.load(getClass().getResource("PatientLookup.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

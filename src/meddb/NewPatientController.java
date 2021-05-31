@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,28 +34,17 @@ public class NewPatientController implements Initializable {
     private Parent root;
     
         //text variables
-    @FXML
-    private Button buttonAdd;
-    @FXML
-    private TextField firstIn;
-    @FXML
-    private TextField lastIn;
-    @FXML
-    private TextField ageIn;
-    @FXML
-    private TextField sexIn;
-    @FXML
-    private TextField illnessIn;
-    @FXML
-    private TextField roomIn;
-    @FXML
-    private TextField allergiesIn;
-    @FXML
-    private TextField DateIn;
-    @FXML
-    private TextField wardIn;
-    @FXML
-    private TextArea textOut;
+    @FXML private Button buttonAdd;
+    @FXML private TextField firstIn;
+    @FXML private TextField lastIn;
+    @FXML private TextField ageIn;
+    @FXML private TextField sexIn;
+    @FXML private TextField illnessIn;
+    @FXML private TextField roomIn;
+    @FXML private TextField allergiesIn;
+    @FXML private TextField DateIn;
+    @FXML private TextField wardIn;
+    @FXML private TextArea textOut;
     
         //button for adding patient information to the database
     @FXML
@@ -108,7 +96,7 @@ public class NewPatientController implements Initializable {
 
                     //code to insert data into database table
                     //uses string command with ? symbols to prepare statement using variables
-                String sql = "INSERT INTO NBUSER.PATIENTS (lastname, firstname, age, sex, illness, allergies, dateadmitted, ward, roomnumber) Values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO admittedpatients (lastname, firstname, age, sex, illness, allergies, dateadmitted, ward, roomnumber) Values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement p = connection.prepareStatement(sql);
                     //sets ? symbols to variable values from user input
                 p.setString(1, last);
@@ -137,7 +125,7 @@ public class NewPatientController implements Initializable {
     @FXML
     private void handleButtonBack(ActionEvent event) throws IOException {
         
-        Parent root = FXMLLoader.load(getClass().getResource("PatientMenu.fxml"));
+        root = FXMLLoader.load(getClass().getResource("PatientMenu.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
