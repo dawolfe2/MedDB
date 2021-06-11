@@ -11,7 +11,7 @@
    <children>
       <Text layoutX="189.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Patient Database Menu" textAlignment="CENTER" underline="true" wrappingWidth="222.9830722808838" />
       <Button id="buttonEntry" layoutX="117.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleButtonEntry" prefHeight="52.0" prefWidth="177.0" style="-fx-background-color: Grey; -fx-font-size: 16;" text="New Patient Entry" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" />
-      <Button id="buttonRecords" layoutX="340.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleButtonRecords" prefHeight="52.0" prefWidth="166.0" style="-fx-background-color: Grey; -fx-font-size: 16;" text="Patient Records" textAlignment="CENTER" AnchorPane.rightAnchor="100.0" />
+      <Button id="buttonRecords" layoutX="340.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleButtonRecords" prefHeight="52.0" prefWidth="197.0" style="-fx-background-color: Grey; -fx-font-size: 16;" text="Patient Records" textAlignment="CENTER" AnchorPane.rightAnchor="69.0" />
       <Button layoutX="256.0" layoutY="453.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" text="Back" />
       <MenuBar layoutY="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
@@ -32,5 +32,6 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Button id="buttonRecordsAdmin" layoutX="324.0" layoutY="370.0" mnemonicParsing="false" onAction="#handleButtonRecordsAdmin" prefHeight="52.0" prefWidth="197.0" style="-fx-background-color: Grey; -fx-font-size: 16;" text="Patient Records Admin" textAlignment="CENTER" />
    </children>
 </AnchorPane>

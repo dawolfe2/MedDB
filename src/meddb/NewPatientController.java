@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -33,18 +37,20 @@ public class NewPatientController implements Initializable {
     private Scene scene;
     private Parent root;
     
+    ObservableList<String> sexList = FXCollections.observableArrayList("Male","Female");
+    
         //text variables
     @FXML private Button buttonAdd;
     @FXML private TextField firstIn;
     @FXML private TextField lastIn;
     @FXML private TextField ageIn;
-    @FXML private TextField sexIn;
     @FXML private TextField illnessIn;
     @FXML private TextField roomIn;
     @FXML private TextField allergiesIn;
-    @FXML private TextField DateIn;
     @FXML private TextField wardIn;
     @FXML private TextArea textOut;
+    @FXML private ChoiceBox sexBox;
+    @FXML private DatePicker dateBox;
     
         //button for adding patient information to the database
     @FXML
@@ -54,12 +60,12 @@ public class NewPatientController implements Initializable {
         String first = firstIn.getText();
         String last = lastIn.getText();
         int age = Integer.valueOf(ageIn.getText());
-        String sex = sexIn.getText();
+        String sex = sexBox.getValue().toString();
         String illness = illnessIn.getText();
         int room = Integer.valueOf(roomIn.getText());
         String allergies = allergiesIn.getText();
         String ward = wardIn.getText();
-        String date = DateIn.getText();
+        String date = dateBox.getValue().toString();
         
             //patient class constructor for holding patient information
         Patient newpatient = new Patient(first, last, age, sex, illness, allergies, date, ward, room);
@@ -80,19 +86,18 @@ public class NewPatientController implements Initializable {
             firstIn.setText("");
             lastIn.setText("");
             ageIn.setText("");
-            sexIn.setText("");
+            sexBox.setValue("");
             illnessIn.setText("");
             roomIn.setText("");
             allergiesIn.setText("");
             wardIn.setText("");
-            DateIn.setText("");
+            dateBox.getEditor().clear();
 
                 //try catch to connect to database using URL, username and pass
             String databaseURL = "jdbc:derby://localhost:1527/contact";
        
             try {
                 Connection connection = DriverManager.getConnection(databaseURL, "nbuser", "nbuser");
-                System.out.println("Connected to Database");
 
                     //code to insert data into database table
                     //uses string command with ? symbols to prepare statement using variables
@@ -114,7 +119,6 @@ public class NewPatientController implements Initializable {
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                System.out.println("Failed");
             }
         
             
@@ -134,7 +138,7 @@ public class NewPatientController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        sexBox.setItems(sexList);
     }    
     
 }

@@ -54,6 +54,18 @@ public class PatientMenuController implements Initializable {
         
     }
     
+    @FXML
+    private void handleButtonRecordsAdmin(ActionEvent event) throws IOException {
+        
+            //code to change scenes to PatientLookup fxml
+        root = FXMLLoader.load(getClass().getResource("PatientLookupAdmin.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

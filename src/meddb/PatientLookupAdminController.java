@@ -26,16 +26,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
     
     //Daniel Wolfe
-    //patient information search controller
+    //patient information admin controller
     //this page allows the user to search for patient information by entering name or room number
+    //this java controller is the same as patientlookup controller but has admin functionality for releasing patients
 
-public class PatientLookupController implements Initializable {
+public class PatientLookupAdminController implements Initializable {
     
      //variables for changing scenes
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private static Patient selectedPatient;
     
     @FXML private Label textReleased;
     @FXML private TextField textName;
@@ -64,7 +64,6 @@ public class PatientLookupController implements Initializable {
         try {
                 //tries to connect to database using database URL, username and password parameter
             Connection connection = DriverManager.getConnection(databaseURL, "nbuser", "nbuser");
-            System.out.println("Connected to Database");
             
                 //searches for patient in database using lastname and returns result set of information
             String sql = "SELECT * FROM admittedpatients where lastname=?";
@@ -92,9 +91,10 @@ public class PatientLookupController implements Initializable {
                 int room = rs.getInt("roomnumber");
                 
                     //patient constructor for retrieved patient information
-                selectedPatient = new Patient(firstname, lastname, age, sex, illness, allergies, dateAdmitted, ward, room);
+                Patient currentPatient = new Patient(firstname, lastname, age, sex, illness, allergies, dateAdmitted, ward, room);
                     //puts patient object information to patient list
-                patient.add(selectedPatient);
+                patient.add(currentPatient);
+                
             }  
             
                 //sets all information from patient list to the table
@@ -114,6 +114,7 @@ public class PatientLookupController implements Initializable {
         tableView.getItems().clear();
         String databaseURL = "jdbc:derby://localhost:1527/contact";
         int roomnum = Integer.valueOf(textRoom.getText());
+        
         
         try {
             
@@ -138,9 +139,11 @@ public class PatientLookupController implements Initializable {
                 String ward = rs.getString("ward");
                 int room = rs.getInt("roomnumber");
                 
-                selectedPatient = new Patient(firstname, lastname, age, sex, illness, allergies, dateAdmitted, ward, room);
-                
-                patient.add(selectedPatient);
+                    //patient constructor for retrieved patient information
+                Patient currentPatient = new Patient(firstname, lastname, age, sex, illness, allergies, dateAdmitted, ward, room);
+                    //puts patient object information to patient list
+                patient.add(currentPatient);
+               
             }  
             
             tableView.setItems(patient);
@@ -152,6 +155,46 @@ public class PatientLookupController implements Initializable {
         }
         
     }
+    
+        //button to remove selected patient entry in database
+    @FXML
+    @SuppressWarnings("empty-statement")
+    private void handleButtonRemove(ActionEvent event) throws IOException {
+          
+        String databaseURL = "jdbc:derby://localhost:1527/contact";
+        ObservableList<Patient> selectedList;
+        
+        selectedList = tableView.getSelectionModel().getSelectedItems();
+        
+        if(selectedList.get(0) != null){
+        
+            int selectedRoom = selectedList.get(0).getRoom();
+            String selectedWard = selectedList.get(0).getWard();
+        
+                //try to connect to the database
+            try {
+                Connection connection = DriverManager.getConnection(databaseURL, "nbuser", "nbuser");
+
+                    //delete table database command string
+                String sql = "DELETE FROM admittedpatients WHERE ward=? AND roomnumber=?";;
+                    //prepared statement to put selected last name into ? from patient class
+                PreparedStatement p = connection.prepareStatement(sql);
+                p.setString(1, selectedWard);
+                p.setInt(2, selectedRoom);
+                    //execute DELETE FROM query
+                p.executeUpdate();
+                    //remove deleted row from table
+                tableView.getItems().remove(selectedList.get(0));
+
+            }
+
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        
+    }    
     
         //button to head back to the menu
     @FXML
